@@ -1,0 +1,29 @@
+{
+  "name": "phore/cache",
+  "description": "Caching library",
+  "keywords": ["Keyword1", "Keyword2"],
+  "license": "MIT",
+  "authors": [
+    { "name": "Matthias Leuffen", "email": "m@tth.es" }
+  ],
+  "repositories": [
+  ],
+  "require": {
+    "php": ">=7.1",
+    "phore/core": "*",
+    "phore/filesystem": "dev-master"
+  },
+  "require-dev": {
+    "phore/objectstore": "*",
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Phore\\Cache\\": "src/"
+    },
+    "files": [
+      "src/functions.php"
+    ]
+  },
+  "minimum-stability": "dev"
+}
