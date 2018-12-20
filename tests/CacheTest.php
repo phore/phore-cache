@@ -17,7 +17,6 @@ use PHPUnit\Framework\TestCase;
 class CacheTest extends TestCase
 {
 
-
     public function testDataPutHasGet ()
     {
         system("rm -R /tmp/cache1");

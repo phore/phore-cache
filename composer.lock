@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-filesystem.git",
-                "reference": "62a2bdb0e9223735667eed0804cb2a83ae17c7b5"
+                "reference": "db8bd5b392007ba41ab4438b87cd4baa34c9ab55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-filesystem/zipball/62a2bdb0e9223735667eed0804cb2a83ae17c7b5",
-                "reference": "62a2bdb0e9223735667eed0804cb2a83ae17c7b5",
+                "url": "https://api.github.com/repos/phore/phore-filesystem/zipball/db8bd5b392007ba41ab4438b87cd4baa34c9ab55",
+                "reference": "db8bd5b392007ba41ab4438b87cd4baa34c9ab55",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "psr/http-message": "^1.0@dev"
             },
             "require-dev": {
-                "nette/tester": "*"
+                "phpunit/phpunit": "^8.0@dev"
             },
             "type": "library",
             "autoload": {
@@ -90,7 +90,7 @@
                     "email": "leuffen@continue.de"
                 }
             ],
-            "time": "2018-11-30T10:37:35+00:00"
+            "time": "2018-12-20T14:07:16+00:00"
         },
         {
             "name": "psr/http-message",
@@ -355,12 +355,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-objectstore.git",
-                "reference": "cab6079a17f5721c3e666dbe7a589136b684a93e"
+                "reference": "853d125a95d7e366c58726a44b44e7c67cec91cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/cab6079a17f5721c3e666dbe7a589136b684a93e",
-                "reference": "cab6079a17f5721c3e666dbe7a589136b684a93e",
+                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/853d125a95d7e366c58726a44b44e7c67cec91cd",
+                "reference": "853d125a95d7e366c58726a44b44e7c67cec91cd",
                 "shasum": ""
             },
             "require": {
@@ -396,7 +396,7 @@
                 }
             ],
             "description": "Object store for local files, google, aws",
-            "time": "2018-11-30T10:38:48+00:00"
+            "time": "2018-12-19T15:28:18+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",

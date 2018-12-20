@@ -11,11 +11,14 @@
   "require": {
     "php": ">=7.1",
     "phore/core": "*",
-    "phore/filesystem": "dev-master"
+    "phore/filesystem": "*"
   },
   "require-dev": {
     "phore/objectstore": "*",
     "phpunit/phpunit": "*"
+  },
+  "suggest": {
+    "phore/objectstore": "Use object-store"
   },
   "autoload": {
     "psr-4": {
