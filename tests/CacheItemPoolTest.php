@@ -103,4 +103,18 @@ class CacheItemPoolTest extends TestCase
          $this->assertTrue(true);
     }
 
+
+    public function testDefaultExpiresAfter()
+    {
+        $pool = new CacheItemPool("redis://redis");
+        $pool->setDefaultExpiresAfter(1);
+        $item = $pool->getItem("abc");
+        $item->set("val1");
+        $pool->save($item);
+
+        $item = $pool->getItem("abc");
+        $this->assertEquals("val1", $item->get());
+    }
+
+
 }

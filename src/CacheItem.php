@@ -155,7 +155,7 @@ class CacheItem implements CacheItemInterface
         if (($data = $this->_tryFetchData()) === null)
             return true;
 
-        if ($data["retryAt"] < time())
+        if ($data["retryAt"] !== null && $data["retryAt"] < time())
             return true;
 
         return false;

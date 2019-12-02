@@ -42,6 +42,10 @@ class CacheItemPool implements CacheItemPoolInterface
     protected $failHard = false;
 
 
+    protected $defaultExpiresAfter = null;
+    protected $defaultRetryAfter = null;
+
+
     protected function _loadCacheDriverByString(string $connStr)
     {
         if (phore_parse_url($connStr)->scheme === "redis")
@@ -84,6 +88,20 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
 
+    public function setDefaultExpiresAfter(int $expiresAfter) : self
+    {
+        $this->defaultExpiresAfter = $expiresAfter;
+        return $this;
+    }
+
+
+    public function setDefaultRetryAfter(int $retryAfter) : self
+    {
+        $this->defaultRetryAfter = $retryAfter;
+        return $this;
+    }
+
+
     /**
      * Returns a Cache Item representing the specified key.
      *
@@ -102,7 +120,12 @@ class CacheItemPool implements CacheItemPoolInterface
      */
     public function getItem($key)
     {
-        return new CacheItem($this, $key, $this->logger, $this->failHard);
+        $new = new CacheItem($this, $key, $this->logger, $this->failHard);
+        if ($this->defaultExpiresAfter !== null)
+            $new->expiresAfter($this->defaultExpiresAfter);
+        if ($this->defaultRetryAfter !== null)
+            $new->retryAfter($this->defaultRetryAfter);
+        return $new;
     }
 
 
