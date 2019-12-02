@@ -20,6 +20,7 @@ class CacheTest extends TestCase
     public function testDataPutHasGet ()
     {
         system("rm -R /tmp/cache1");
+        mkdir("/tmp/cache1");
         $cache = new Cache(new ObjectStore(new FileSystemObjectStoreDriver("/tmp/cache1")));
 
         $this->assertEquals(false, $cache->has("key"));

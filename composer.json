@@ -11,9 +11,13 @@
   "require": {
     "php": ">=7.1",
     "phore/core": "*",
-    "phore/filesystem": "*"
+    "psr/cache": "^1.0@dev",
+    "predis/predis": "^2.0@dev"
   },
   "require-dev": {
+    "ext-redis": "*",
+    "psr/log": "*",
+    "phore/filesystem": "*",
     "phore/objectstore": "*",
     "phpunit/phpunit": "*"
   },
