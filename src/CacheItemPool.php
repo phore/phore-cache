@@ -16,6 +16,7 @@ use Phore\Cache\Driver\RedisCacheDriver;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 class CacheItemPool implements CacheItemPoolInterface
@@ -91,6 +92,12 @@ class CacheItemPool implements CacheItemPoolInterface
     public function setDefaultExpiresAfter(int $expiresAfter) : self
     {
         $this->defaultExpiresAfter = $expiresAfter;
+        return $this;
+    }
+
+    public function setLogger(LoggerInterface $logger) : self
+    {
+        $this->logger = $logger;
         return $this;
     }
 
