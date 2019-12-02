@@ -11,8 +11,7 @@
   "require": {
     "php": ">=7.1",
     "phore/core": "*",
-    "psr/cache": "^1.0@dev",
-    "predis/predis": "^2.0@dev"
+    "psr/cache": "^1.0@dev"
   },
   "require-dev": {
     "ext-redis": "*",

@@ -235,6 +235,12 @@ _usage() {
         $0 skel upgrade
             Upgrade to the latest kickstart version
 
+        $0 secrets list
+            List all secrets stored for this project
+
+        $0 secrets edit [secret_name]
+            Edit / create secret
+
         $0 wakeup
             Try to start a previous image with same container name (faster startup)
 
@@ -558,6 +564,24 @@ while [ "$#" -gt 0 ]; do
         fi
         exit 0;;
 
+    secrets)
+        secretDir="$HOME/.kickstart/secrets/$CONTAINER_NAME"
+        mkdir -p $(dirname $secretDir)
+
+        [[ "$2" == "list" ]] && echo "Listing secrets from $secretDir:" && ls $secretDir && exit 0;
+
+        [[ "$2" != "edit" ]] && echo -e "Error: No secret specified\nUsage: $0 secrets list|edit [<secretname>]" && exit 1;
+
+        [[ "$3" == "" ]] && echo -e "Error: No secret specified\nUsage: $0 secrets list|edit [<secretname>]" && exit 1;
+
+        secretFile=$secretDir/$3
+
+        editor $secretFile
+        echo "Edit successful: $secretFile"
+
+        exit 0;;
+
+
     ci-build|--ci-build)
         _ci_build $2 $3
         exit0;;
@@ -593,8 +617,11 @@ fi
 
 if [ -e "$HOME/.bash_history" ]
 then
-    echo "Mounting $HOME/.bash_history..."
-    DOCKER_OPT_PARAMS="$DOCKER_OPT_PARAMS -v $HOME/.bash_history:/home/user/.bash_history";
+    bashHistoryFile="$HOME/.kickstart/bash_history/$CONTAINER_NAME";
+    echo "Mounting containers bash-history from $bashHistroyFile..."
+    mkdir -p $(dirname $bashHistoryFile)
+    touch $bashHistoryFile
+    DOCKER_OPT_PARAMS="$DOCKER_OPT_PARAMS -v $bashHistoryFile:/home/user/.bash_history";
 fi
 
 if [ -e "$PROGPATH/.env" ]

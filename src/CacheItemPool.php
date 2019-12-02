@@ -66,8 +66,15 @@ class CacheItemPool implements CacheItemPoolInterface
      */
     public function getItem($key)
     {
-        return new CacheItem($this->cacheDriver, $key, $this->logger, $this->failHard);
+        return new CacheItem($this, $key, $this->logger, $this->failHard);
     }
+
+
+    public function getDriver() : CacheDriver
+    {
+        return $this->cacheDriver;
+    }
+
 
     /**
      * Returns a traversable set of cache items.
@@ -233,4 +240,25 @@ class CacheItemPool implements CacheItemPoolInterface
             $this->save($item);
         return true;
     }
+
+
+
+    public function getCached(CacheItem $item, callable $dataCb)
+    {
+        if ($item->shouldRetry()) {
+            try {
+                $data = $dataCb($item);
+                $item->set($data);
+                return $data;
+            } catch (\Exception $e) {
+                $this->logger->alert("getCached({$item->getKey()}): Exception: " . $e->getMessage());
+                if ( ! $item->isHit())
+                    throw $e;
+            }
+        }
+        return $item->get();
+    }
+
+
+
 }

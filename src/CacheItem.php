@@ -46,10 +46,15 @@ class CacheItem implements CacheItemInterface
 
     protected $failHard = false;
 
-    public function __construct(CacheDriver $cacheDriver, string $key, LoggerInterface $logger, bool $failHard = false)
+    private $cacheItemPool;
+
+    public function __construct(CacheItemPool $cacheItemPool, string $key, LoggerInterface $logger, bool $failHard = false)
     {
-        $this->cacheDriver = $cacheDriver;
         $this->key = $key;
+
+        $this->cacheItemPool = $cacheItemPool;
+        $this->cacheDriver = $cacheItemPool->getDriver();
+
         $this->logger = $logger;
         $this->failHard = $failHard;
     }
