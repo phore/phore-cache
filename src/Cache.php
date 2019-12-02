@@ -32,7 +32,6 @@ class Cache
     public function has(string $key) : bool
     {
         $valid_to = $this->driver->object($key)->getMeta("valid_to", null);
-        echo $valid_to;
         if ($valid_to > time() && $valid_to !== null) {
             return true;
         }
