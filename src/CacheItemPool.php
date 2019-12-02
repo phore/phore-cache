@@ -243,21 +243,7 @@ class CacheItemPool implements CacheItemPoolInterface
 
 
 
-    public function getCached(CacheItem $item, callable $dataCb)
-    {
-        if ($item->shouldRetry()) {
-            try {
-                $data = $dataCb($item);
-                $item->set($data);
-                return $data;
-            } catch (\Exception $e) {
-                $this->logger->alert("getCached({$item->getKey()}): Exception: " . $e->getMessage());
-                if ( ! $item->isHit())
-                    throw $e;
-            }
-        }
-        return $item->get();
-    }
+
 
 
 

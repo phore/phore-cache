@@ -256,4 +256,29 @@ class CacheItem implements CacheItemInterface
         return $this;
     }
 
+
+    /**
+     * Execute a callback function
+     *
+     * @param callable $dataCb
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getCached(callable $dataCb)
+    {
+        if ($this->shouldRetry()) {
+            try {
+                $data = $dataCb($this);
+                $this->set($data);
+                $this->cacheItemPool->save($this);
+                return $data;
+            } catch (\Exception $e) {
+                $this->logger->alert("getCached({$this->getKey()}): Exception: " . $e->getMessage());
+                if ( ! $this->isHit())
+                    throw $e;
+            }
+        }
+        return $this->get();
+    }
+
 }
