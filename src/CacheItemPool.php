@@ -11,6 +11,8 @@ namespace Phore\Cache;
 
 use Phore\Cache\Driver\CacheDriver;
 use Phore\Cache\Driver\CacheDriverException;
+use Phore\Cache\Driver\NullCacheDriver;
+use Phore\Cache\Driver\RedisCacheDriver;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
@@ -40,8 +42,42 @@ class CacheItemPool implements CacheItemPoolInterface
     protected $failHard = false;
 
 
-    public function __construct(CacheDriver $cacheDriver, bool $failHard = false)
+    protected function _loadCacheDriverByString(string $connStr)
     {
+        if (phore_parse_url($connStr)->scheme === "redis")
+            return new RedisCacheDriver($connStr);
+
+        if (phore_parse_url($connStr)->scheme === "null")
+            return new NullCacheDriver();
+
+        throw new \InvalidArgumentException("Invalid cache driver: '$cacheDriver'");
+
+    }
+
+
+    /**
+     * CacheItemPool constructor.
+     *
+     *
+     * <example>
+     * $pool = new CachePoolDriver("redis://redis");
+     * $pool = new CachePoolDriver(new RedisCacheDriver("redis://redis"));
+     * </example>
+     *
+     * @param null $cacheDriver
+     * @param bool $failHard
+     * @throws \Exception
+     */
+    public function __construct($cacheDriver=null, bool $failHard = false)
+    {
+        if ( ! $cacheDriver instanceof CacheDriver) {
+            if ($cacheDriver === null) {
+                $cacheDriver = new NullCacheDriver();
+            } else {
+                $cacheDriver = $this->_loadCacheDriverByString($cacheDriver);
+            }
+        }
+
         $this->cacheDriver = $cacheDriver;
         $this->logger = new NullLogger();
         $this->failHard = $failHard;

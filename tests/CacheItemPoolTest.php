@@ -16,10 +16,23 @@ use PHPUnit\Framework\TestCase;
 class CacheItemPoolTest extends TestCase
 {
 
+
+    public function testWithStringConnection()
+    {
+        $pool = new CacheItemPool("redis://redis");
+        $this->assertInstanceOf(RedisCacheDriver::class, $pool->getDriver());
+    }
+
+    public function testWithObjectConnection()
+    {
+        $pool = new CacheItemPool(new RedisCacheDriver("redis://redis"));
+        $this->assertInstanceOf(RedisCacheDriver::class, $pool->getDriver());
+    }
+
     public function testCaching()
     {
 
-        $pool = new CacheItemPool(new RedisCacheDriver("redis://redis"));
+        $pool = new CacheItemPool("redis://redis");
 
 
         $item = $pool->getItem("a");
@@ -38,7 +51,7 @@ class CacheItemPoolTest extends TestCase
 
     public function testExpiresOnTime()
     {
-        $pool = new CacheItemPool(new RedisCacheDriver("redis://redis"));
+        $pool = new CacheItemPool("redis://redis");
 
 
         $item = $pool->getItem("a");
@@ -55,7 +68,7 @@ class CacheItemPoolTest extends TestCase
 
     public function testShouldRetry()
     {
-        $pool = new CacheItemPool(new RedisCacheDriver("redis://redis"));
+        $pool = new CacheItemPool("redis://redis");
 
 
         $item = $pool->getItem("a");
@@ -80,7 +93,7 @@ class CacheItemPoolTest extends TestCase
 
     public function testFailsSilently ()
     {
-         $pool = new CacheItemPool(new RedisCacheDriver("redis://non-existent"));
+         $pool = new CacheItemPool("redis://non-existent-redis");
 
          $item = $pool->getItem("a");
 
