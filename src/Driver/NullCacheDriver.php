@@ -14,16 +14,33 @@ class NullCacheDriver implements CacheDriver
 
     public function has(string $key): bool
     {
-        // TODO: Implement has() method.
+        return false;
     }
 
     public function get(string $key)
     {
-        // TODO: Implement get() method.
+        return null;
     }
 
-    public function set(string $key, $value)
+
+
+    public function del(string $key): bool
     {
-        // TODO: Implement set() method.
+        return false;
+    }
+
+    public function clear()
+    {
+        return true;
+    }
+
+    public function connect()
+    {
+        return true;
+    }
+
+    public function set(string $key, $value, int $expiresAt)
+    {
+        return false;
     }
 }
