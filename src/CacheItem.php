@@ -46,6 +46,9 @@ class CacheItem implements CacheItemInterface
 
     protected $failHard = false;
 
+    /**
+     * @var CacheItemPool
+     */
     private $cacheItemPool;
 
     public function __construct(CacheItemPool $cacheItemPool, string $key, LoggerInterface $logger, bool $failHard = false)
@@ -258,13 +261,14 @@ class CacheItem implements CacheItemInterface
 
 
     /**
-     * Execute a callback function
+     * Execute a callback function to retrieve Data
+     * and return the data.
      *
      * @param callable $dataCb
      * @return mixed
      * @throws \Exception
      */
-    public function getCached(callable $dataCb)
+    public function load(callable $dataCb)
     {
         if ($this->shouldRetry()) {
             try {

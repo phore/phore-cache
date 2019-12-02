@@ -13,7 +13,7 @@ use Phore\Cache\CacheItemPool;
 use Phore\Cache\Driver\RedisCacheDriver;
 use PHPUnit\Framework\TestCase;
 
-class GetCachedTest extends TestCase
+class LoadTest extends TestCase
 {
 
 
@@ -28,20 +28,20 @@ class GetCachedTest extends TestCase
             $calls++;
             return "data$calls";
         };
-        $data = $item->getCached($cb);
+        $data = $item->load($cb);
 
         $this->assertEquals(1, $calls);
         $this->assertEquals("data1", $data);
 
         $item = $pool->getItem("someKey")->expiresAfter(3600)->retryAfter(1);
-        $data = $item->getCached($cb);
+        $data = $item->load($cb);
 
         $this->assertEquals(1, $calls);
         $this->assertEquals("data1", $data);
 
         sleep(2);
         $item = $pool->getItem("someKey")->expiresAfter(3600)->retryAfter(1);
-        $data = $item->getCached($cb);
+        $data = $item->load($cb);
 
         $this->assertEquals(2, $calls);
         $this->assertEquals("data2", $data);
