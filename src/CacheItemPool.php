@@ -11,8 +11,10 @@ namespace Phore\Cache;
 
 use Phore\Cache\Driver\CacheDriver;
 use Phore\Cache\Driver\CacheDriverException;
+use Phore\Cache\Driver\FilesystemCacheDriver;
 use Phore\Cache\Driver\NullCacheDriver;
 use Phore\Cache\Driver\RedisCacheDriver;
+use PHPUnit\Util\Filesystem;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
@@ -55,6 +57,9 @@ class CacheItemPool implements CacheItemPoolInterface
         if (phore_parse_url($connStr)->scheme === "null")
             return new NullCacheDriver();
 
+        if (phore_parse_url($connStr)->scheme === "file")
+            return new FilesystemCacheDriver(phore_parse_url($connStr)->path);
+        
         throw new \InvalidArgumentException("Invalid cache driver: '$cacheDriver'");
 
     }
